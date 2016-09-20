@@ -1,0 +1,34 @@
+#RewriteEngine on
+#Options +FollowSymlinks -MultiViews
+#RewriteCond %{QUERY_STRING} !^domain= [NC]
+#RewriteRule ^([^/]*)/?$ /index.php?domain=$1 [L,R=301,NE,QSA]
+
+Options +FollowSymLinks
+
+RewriteEngine On
+
+RewriteRule ^http:/(.+)$ /$1 [R=301,L]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.+)$ /index.php?domain=$1 [QSA,L]
+
+
+
+## set caching on static content ##
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/php "access 1 year"
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/gif "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType text/css "access 1 month"
+ExpiresByType application/pdf "access 1 month"
+ExpiresByType text/x-javascript "access 1 month"
+ExpiresByType text/javascript "access 1 month"
+ExpiresByType application/x-shockwave-flash "access 1 month"
+ExpiresByType image/x-icon "access 1 year"
+ExpiresDefault "access 2 days"
+</IfModule>
+## end expires caching ##
